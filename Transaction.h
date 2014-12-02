@@ -9,10 +9,13 @@ struct Transaction
 	Transaction()
 	{
 		count = 0;
+		for (int i = 0; i < 50; i++)
+			item[i] = -1;
 	}
-	LinkedList<int> item;
+	//LinkedList<int> item;
+	int item[50];
 	int count;
-
+	
 	inline bool operator<(const Transaction& rhs)
 	{
 		return this->count < rhs.count;
