@@ -4,9 +4,9 @@ using namespace std;
 
 int main()
 {
-	
+	string filename = "T5.N0.1K.D1K.txt"; //filename;
 	float support = 0.0025f;  //support number
-	int transactionCount = getTransactionNumber("T5.N0.1K.D1K.txt");  //get the transaction counts
+	int transactionCount = getTransactionNumber(filename);  //get the transaction counts
 	int itemNumber = 100;   //the number of different item in the transaction
 
 	if(transactionCount == -1)
@@ -17,14 +17,14 @@ int main()
 	cout << "S(support): " << support << endl;
 	cin.get();
 
-	LinkedList<int> transactions[1000]; //transaction dataset
+	LinkedList<int> transactions[10000]; //transaction dataset
 	Transaction oneItemset[100];        //one itemset candidate
 	LinkedList<Transaction> oneItemFreSet; //one item frequent sets
 	LinkedList<Transaction> multiSet;      //k item candidate set
 	LinkedList<Transaction> kItemset;      //k item frequent set
 
 	//read transaction
-	readTransactions("T5.N0.1K.D1K.txt", transactions);
+	readTransactions(filename, transactions);
 
 	//one item itemset candidate
 	getOneItemset(transactions,oneItemset,itemNumber,transactionCount);
