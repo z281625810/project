@@ -29,12 +29,12 @@ void getOneItemset(LinkedList<int> transactions[],Transaction oneItemset[], int 
 
 
 //generate one frequent itemset
-void generateOneItemset(Transaction transaction[], LinkedList<Transaction> &oneItemSet, int support, int size)
+void generateOneItemset(Transaction transaction[], LinkedList<Transaction> &oneItemSet, float support, int size,int transCount)
 {
 	int i;
 	for(i = 0; i < size; i++)
 	{
-		if(transaction[i].count >= support)
+		if((float)transaction[i].count/transCount >= support)
 			oneItemSet.insert(transaction[i]);
 
 	}
@@ -42,13 +42,13 @@ void generateOneItemset(Transaction transaction[], LinkedList<Transaction> &oneI
 }
 
 
-void generateKItemset(LinkedList<Transaction> &KItemset, LinkedList<Transaction> &multiItemset, int support, int size)
+void generateKItemset(LinkedList<Transaction> &KItemset, LinkedList<Transaction> &multiItemset, float support, int size)
 {
 	int i;
 	KItemset.clear();
 	for(i = 0; i < multiItemset.getCount(); i++)
 	{
-		if(multiItemset.getData(i).count >= support)
+		if((float)multiItemset.getData(i).count/size >= support)
 			KItemset.insert(multiItemset.getData(i));
 	}
 

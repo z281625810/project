@@ -4,7 +4,8 @@ using namespace std;
 
 int main()
 {
-	int support = 10;
+	
+	float support = 0.25f;
 	LinkedList<int> transactions[1000]; //transaction dataset
 	Transaction oneItemset[100];        //one itemset candidate
 	LinkedList<Transaction> oneItemFreSet; //one item frequent sets
@@ -12,23 +13,24 @@ int main()
 	LinkedList<Transaction> kItemset;      //k item frequent set
 	readTransactions("T5.N0.1K.D1K.txt", transactions);
 	getOneItemset(transactions,oneItemset,100,1000);
-	generateOneItemset(oneItemset,oneItemFreSet,support,100);
+	generateOneItemset(oneItemset,oneItemFreSet,support,100,1000);
 	getKItemset(transactions, multiSet,oneItemFreSet,2,1000);
-	
-	support = 10;
 	generateKItemset(kItemset,multiSet,support,1000);
 	show(kItemset,2);
-	getKItemset(transactions,multiSet,kItemset,3,1000);
-	support = 5;
-	generateKItemset(kItemset,multiSet,support,1000);
-	show(kItemset,3);
-	getKItemset(transactions,multiSet,kItemset,4,1000);
-	support = 1;
-	generateKItemset(kItemset,multiSet,support,1000);
-	show(kItemset,4);
-	getKItemset(transactions,multiSet,kItemset,5,1000);
-	generateKItemset(kItemset,multiSet,support,1000);
-	show(kItemset,5);
+	
+	int k = 3;
+	while(multiSet.getCount()!=0)
+	{
+		getKItemset(transactions,multiSet,kItemset,k,1000);
+		generateKItemset(kItemset,multiSet,support,1000);
+		show(kItemset,k);
+		k++;
+	}
+	if(multiSet.getCount() == 0)
+	{
+		cout << "complete.." << endl;
+	}
+	
 	
 	cin.get();
 	return 0;
