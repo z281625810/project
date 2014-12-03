@@ -1,6 +1,34 @@
 #include "Header.h"
 
 
+/*     Pre: 1. filename
+*     Post: get the transaction count
+*  Purpose: to return how many transaction in the file
+*****************************************************************************/
+int getTransactionNumber(const string &filename)
+{
+	ifstream input(filename);
+	string str;
+	
+
+	if(input.good())
+	{
+		while(input >> std::ws && getline(input,str))
+			;
+		input.close();
+		istringstream s(str);
+		s >> str;
+
+		return stoi(str);
+	}
+	
+	else
+		cout << "Can't open the file.." << endl;
+	return -1;
+
+
+}
+
 /*     Pre: 1. all transactions
 			2. an array to hold the 1 item itemset
 			3. size of the itemset, which is the number of distinct items in the market
@@ -28,7 +56,14 @@ void getOneItemset(LinkedList<int> transactions[],Transaction oneItemset[], int 
 }
 
 
-//generate one frequent itemset
+/*     Pre: 1. all transaction database
+			2. oneItemset frequent set
+			3. support number
+			4. the number of different kinds of items
+			5. transaction count
+*     Post: generate oneItem frequent set
+*  Purpose: to generate oneItem frequent set
+*****************************************************************************/
 void generateOneItemset(Transaction transaction[], LinkedList<Transaction> &oneItemSet, float support, int size,int transCount)
 {
 	int i;
@@ -42,6 +77,13 @@ void generateOneItemset(Transaction transaction[], LinkedList<Transaction> &oneI
 }
 
 
+/*     Pre: 1. K item itemset frequent set
+			2. k item candidate set
+			3. support number
+			4.number of transaction
+*     Post: generate the k item frequent set
+*  Purpose: to generate the k item frequent set
+*****************************************************************************/
 void generateKItemset(LinkedList<Transaction> &KItemset, LinkedList<Transaction> &multiItemset, float support, int size)
 {
 	int i;
@@ -55,6 +97,14 @@ void generateKItemset(LinkedList<Transaction> &KItemset, LinkedList<Transaction>
 }
 
 
+/*     Pre: 1. transaction database
+			2. k item candidate set
+			3. k-1 item frequent set
+			4. k value, which is the round
+			5. number of transactions
+*     Post: get the k item candidate set
+*  Purpose: to get the k item candidate set
+*****************************************************************************/
 void getKItemset(LinkedList<int> transactions[],LinkedList<Transaction> &multiItemset, 
 				 LinkedList<Transaction> &freItemset, int k,int size)
 {
@@ -108,7 +158,13 @@ void getKItemset(LinkedList<int> transactions[],LinkedList<Transaction> &multiIt
 }
 
 
-//determine whether the combination is there or not, return the times it appears
+/*     Pre: 1. transaction database
+			2. a transaction object
+			3. k value, which is the round
+			4. number of transaction
+*     Post: return how many times the itemset is existed in the database
+*  Purpose: to find how many times the itemset is exisetd in the database
+*****************************************************************************/
 int isExist(LinkedList<int> transactions[], Transaction item, int k, int size)
 {
 	int i,y;
@@ -136,6 +192,11 @@ int isExist(LinkedList<int> transactions[], Transaction item, int k, int size)
 }
 
 
+/*     Pre: 1. filename
+			2. transaction database
+*     Post: initialize the database
+*  Purpose: to initialize the database
+*****************************************************************************/
 void readTransactions(const string &filename, LinkedList<int> transactions[])
 {
 	ifstream input(filename);
@@ -159,6 +220,12 @@ void readTransactions(const string &filename, LinkedList<int> transactions[])
 
 }
 
+
+/*     Pre: 1. k itemset
+			2. k indicate how many items
+*     Post: display the items of k itemset 
+*  Purpose: to display the items of k itemset
+*****************************************************************************/
 void show(LinkedList<Transaction> &kItemset, int k)
 {
 	int i,y;

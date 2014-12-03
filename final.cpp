@@ -5,19 +5,42 @@ using namespace std;
 int main()
 {
 	
-	float support = 0.25f;
+	float support = 0.0025f;  //support number
+	int transactionCount = getTransactionNumber("T5.N0.1K.D1K.txt");  //get the transaction counts
+	int itemNumber = 100;   //the number of different item in the transaction
+
+	if(transactionCount == -1)
+		return 1;
+
+	cout << "N(number of items): " << itemNumber << endl;
+	cout << "D(number of trans): " << transactionCount << endl;
+	cout << "S(support): " << support << endl;
+	cin.get();
+
 	LinkedList<int> transactions[1000]; //transaction dataset
 	Transaction oneItemset[100];        //one itemset candidate
 	LinkedList<Transaction> oneItemFreSet; //one item frequent sets
 	LinkedList<Transaction> multiSet;      //k item candidate set
 	LinkedList<Transaction> kItemset;      //k item frequent set
+
+	//read transaction
 	readTransactions("T5.N0.1K.D1K.txt", transactions);
-	getOneItemset(transactions,oneItemset,100,1000);
-	generateOneItemset(oneItemset,oneItemFreSet,support,100,1000);
-	getKItemset(transactions, multiSet,oneItemFreSet,2,1000);
-	generateKItemset(kItemset,multiSet,support,1000);
+
+	//one item itemset candidate
+	getOneItemset(transactions,oneItemset,itemNumber,transactionCount);
+
+	//one item itemset frequent set
+	generateOneItemset(oneItemset,oneItemFreSet,support,itemNumber,transactionCount);
+
+	//two item itemset candidate
+	getKItemset(transactions, multiSet,oneItemFreSet,2,transactionCount);
+
+	//two item itemset frequent set
+	generateKItemset(kItemset,multiSet,support,transactionCount);
+
 	show(kItemset,2);
 	
+	//multiple item set candidate and frequent sets
 	int k = 3;
 	while(multiSet.getCount()!=0)
 	{
